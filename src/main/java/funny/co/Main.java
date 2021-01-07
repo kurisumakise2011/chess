@@ -3,7 +3,7 @@ package funny.co;
 import funny.co.core.Caller;
 import funny.co.core.GameplayHandler;
 import funny.co.core.KeyboardHandler;
-import funny.co.ui.Chessboard;
+import funny.co.ui.ChessboardBuilder;
 import funny.co.ui.ChessboardPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -27,7 +27,7 @@ public class Main extends Application implements Caller {
         stage.setTitle("Chess");
         AnchorPane pane = new AnchorPane();
 
-        ChessboardPane chessboard = Chessboard.build(800, 600);
+        ChessboardPane chessboard = ChessboardBuilder.build(800, 600);
         chessboard.setOnKeyReleased(new KeyboardHandler(this));
 
         GameplayHandler gameplay = new GameplayHandler(chessboard);

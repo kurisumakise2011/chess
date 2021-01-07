@@ -19,7 +19,6 @@ public class KingMovement extends AbstractPieceMovement {
             Position.of(1, -1)
     );
 
-
     @Override
     public List<Position> find(Map<Position, ChessSquare> squares, ChessSquare square) {
         List<Position> possible = new ArrayList<>(8);

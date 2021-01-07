@@ -24,7 +24,7 @@ public class PawnMovement extends AbstractPieceMovement {
         append(possible, pos.add(Position.of(1, -1).mult(piece.getDirection())));
         append(possible, pos.add(Position.of(1, 1).mult(piece.getDirection())));
 
-        moves.addAll(filterAttack(possible, squares, piece));
+        moves.addAll(filterAttack(possible, squares, piece.isWhite()));
 
         return moves;
     }

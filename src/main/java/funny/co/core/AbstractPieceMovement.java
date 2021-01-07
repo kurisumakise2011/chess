@@ -1,18 +1,22 @@
 package funny.co.core;
 
 import funny.co.model.ChessSquare;
+import funny.co.model.Chessboard;
+import funny.co.model.Movable;
+import funny.co.model.PieceType;
 import funny.co.model.Position;
-import funny.co.ui.ChessboardPane;
-import funny.co.model.Piece;
+import funny.co.ui.ChessboardBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPieceMovement implements PieceMovement {
-    public List<Position> allMoves(ChessSquare square, ChessboardPane chessboard) {
+    public List<Position> allMoves(ChessSquare square, Chessboard chessboard) {
         Position position = square.getPosition();
         if (!position.validPosition()) {
             return Collections.emptyList();
@@ -20,26 +24,103 @@ public abstract class AbstractPieceMovement implements PieceMovement {
         return find(chessboard.getSquares(), square);
     }
 
-    public abstract List<Position> find(Map<Position, ChessSquare> chessboard, ChessSquare piece);
+    public abstract List<Position> find(Map<Position, ChessSquare> chessboard, ChessSquare square);
 
-    public boolean canMove(ChessSquare piece, ChessboardPane chessboard, Position position) {
-        return allMoves(piece, chessboard).contains(position);
+    public Movable canMove(ChessSquare square, Chessboard chessboard, Position position) {
+        var moves = allMoves(square, chessboard);
+        boolean hasPosition = moves.contains(position);
+        var colour = square.getPiece().isWhite();
+        boolean check = underCheck(chessboard, square, position);
+//        if (check) {
+//            // verify that other pieces cannot help to avoid the check
+//            List<ChessSquare> pieces = chessboard.getPieces(colour);
+//            for (ChessSquare sq : pieces) {
+//                var piece = sq.getPiece();
+//                var poses = piece.getMovement().allMoves(sq, chessboard);
+//                for (Position pos : poses) {
+//                    if (!underCheck(chessboard, sq, pos)) {
+//                        return new Movable(true, false, false);
+//                    }
+//                }
+//            }
+//            return new Movable(true, false, true);
+//        }
+//        return new Movable(false, hasPosition, false);
+        return new Movable(check, hasPosition && !check, false);
     }
 
-    public void move(ChessSquare square, ChessboardPane chessboard, Position position) {
-        if (canMove(square, chessboard, position)) {
-            var piece = square.getPiece();
-            // removes from previous square
-            square.remove();
+    protected boolean underCheck(Chessboard chessboard, ChessSquare square, Position position) {
+        return fakeMove(chessboard, square, position);
+    }
 
-            Map<Position, ChessSquare> squares = chessboard.getSquares();
-            ChessSquare target = squares.get(position);
-            if (!target.isFree()) {
-                chessboard.addRemoved(target.remove());
-            }
-            target.add(piece);
-            chessboard.refresh();
+    private boolean fakeMove(Chessboard chessboard, ChessSquare square, Position position) {
+        var squares = chessboard.getSquares();
+        var target = squares.get(position);
+        var piece = square.getPiece();
+
+        var checkpointSq = square.save();
+        var checkpointT = target.save();
+
+        square.remove();
+        if (!target.isFree()) {
+            // not necessary adding piece to removed list, because of the fake movement
+            target.remove();
         }
+        target.add(piece);
+        boolean underCheck = isCheck(chessboard, piece.isWhite());
+        square.restore(checkpointSq);
+        target.restore(checkpointT);
+
+        return underCheck;
+    }
+
+    private boolean isCheck(Chessboard chessboard, boolean whiteMoves) {
+        return chessboard.getSquares()
+                .values()
+                .stream()
+                .filter(square -> square.getPiece() != null && square.getPiece().isWhite() != whiteMoves)
+                .map(square -> square.getPiece().getMovement().allMoves(square, chessboard))
+                .map(position -> filterAttackOnKing(position, chessboard.getSquares(), whiteMoves))
+                .mapToLong(Collection::size)
+                .sum() > 0;
+    }
+
+    public void move(ChessSquare square, Chessboard chessboard, Position position) {
+        var piece = square.getPiece();
+        // removes from previous square
+//        var squareCopy = square.save();
+        square.remove();
+
+        Map<Position, ChessSquare> squares = chessboard.getSquares();
+        ChessSquare target = squares.get(position);
+        if (!target.isFree()) {
+//            var targetCopy = target.save();
+//            chessboard.hitSave(targetCopy);
+            chessboard.addRemoved(target.remove());
+        }
+        target.add(piece);
+        var moves = allMoves(target, chessboard);
+        var colour = target.getPiece().isWhite();
+        var enemyKing = chessboard.findKing(!colour);
+        var pos = enemyKing.getPosition();
+        if (moves.contains(pos)) {
+            // will make check
+            enemyKing.setBackground(ChessboardBuilder.check);
+            List<ChessSquare> pieces = chessboard.getPieces(colour);
+            for (ChessSquare sq : pieces) {
+                var pieceOnSquare = sq.getPiece();
+                var poses = pieceOnSquare.getMovement().allMoves(sq, chessboard);
+                for (Position possiblePosition : poses) {
+                    if (!underCheck(chessboard, sq, possiblePosition)) {
+                        return;
+                    }
+                }
+            }
+            // checkmate
+            chessboard.disable();
+            return;
+        }
+        chessboard.refresh();
     }
 
     protected void append(List<Position> moves, Position position) {
@@ -57,11 +138,20 @@ public abstract class AbstractPieceMovement implements PieceMovement {
                 .collect(Collectors.toList());
     }
 
-    protected List<Position> filterAttack(List<Position> possible, Map<Position, ChessSquare> squares, Piece piece) {
+    protected List<Position> filterAttackOnKing(@NotNull List<Position> possible, Map<Position, ChessSquare> squares, boolean isWhite) {
         return possible
                 .stream()
                 .map(squares::get)
-                .filter(square -> square.isEnemyPiece(piece.isWhite()))
+                .filter(square -> square.isEnemyPiece(!isWhite) && square.getPiece().getType() == PieceType.KING)
+                .map(ChessSquare::getPosition)
+                .collect(Collectors.toList());
+    }
+
+    protected List<Position> filterAttack(List<Position> possible, Map<Position, ChessSquare> squares, boolean isWhite) {
+        return possible
+                .stream()
+                .map(squares::get)
+                .filter(square -> square.isEnemyPiece(isWhite))
                 .map(ChessSquare::getPosition)
                 .collect(Collectors.toList());
     }

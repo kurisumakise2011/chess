@@ -1,9 +1,13 @@
 package funny.co.model;
 
+import funny.co.design.Originator;
+import funny.co.design.Prototype;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
+import org.jetbrains.annotations.Nullable;
 
-public class ChessSquare extends StackPane {
+public class ChessSquare extends StackPane
+        implements Originator<ChessSquareState>, Prototype<ChessSquare> {
     private boolean selected;
     private Piece current;
     private Background fill;
@@ -35,6 +39,7 @@ public class ChessSquare extends StackPane {
         return current;
     }
 
+    @Nullable
     public Piece getPiece() {
         return current;
     }
@@ -69,5 +74,31 @@ public class ChessSquare extends StackPane {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    @Override
+    public ChessSquareState save() {
+        return new ChessSquareState(this, getChildren());
+    }
+
+    @Override
+    public void restore(ChessSquareState chessSquareState) {
+        var state = chessSquareState.getSquare();
+        this.selected = state.selected;
+        this.current = state.current;
+        this.position = state.position;
+        this.enable = state.enable;
+        this.getChildren().addAll(chessSquareState.getNodes());
+    }
+
+    @Override
+    public ChessSquare copy() {
+        ChessSquare clone = new ChessSquare();
+        clone.selected = this.selected;
+        clone.current = this.current;
+        clone.position = this.position;
+        clone.enable = this.enable;
+
+        return clone;
     }
 }

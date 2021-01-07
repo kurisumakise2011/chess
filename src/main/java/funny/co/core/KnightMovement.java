@@ -33,7 +33,7 @@ public class KnightMovement extends AbstractPieceMovement {
         append(possible, Position.of(row + 1, col - 2));
 
         return Stream.of(
-                filterFree(possible, squares), filterAttack(possible, squares, square.getPiece()))
+                filterFree(possible, squares), filterAttack(possible, squares, square.getPiece().isWhite()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }

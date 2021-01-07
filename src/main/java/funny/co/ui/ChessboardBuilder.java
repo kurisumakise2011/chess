@@ -19,7 +19,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Chessboard {
+public class ChessboardBuilder {
     // vertical
     public static final int FILES = 8;
     // horizontal
@@ -28,12 +28,13 @@ public class Chessboard {
     public static final Background whiteSquare = new Background(new BackgroundFill(Color.WHEAT, CornerRadii.EMPTY, Insets.EMPTY));
     public static final Background blackSquare = new Background(new BackgroundFill(Color.ROSYBROWN, CornerRadii.EMPTY, Insets.EMPTY));
     public static final Background selected = new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY));
+    public static final Background check = new Background(new BackgroundFill(Color.LIGHTPINK, CornerRadii.EMPTY, Insets.EMPTY));
     private static final Map<String, Image> pieces = new HashMap<>();
     private static final Map<Position, PieceMeta> positions = new HashMap<>();
 
     static {
         try {
-            URL resource = Chessboard.class.getResource("/piece/min");
+            URL resource = ChessboardBuilder.class.getResource("/piece/min");
             File dir = new File(resource.toURI());
             for (File file : dir.listFiles()) {
                 pieces.put(file.getName(), new Image(file.toURI().toString()));
@@ -51,8 +52,8 @@ public class Chessboard {
         positions.put(Position.of(rank, 0), PieceMeta.of(colour + "_rock.png", PieceType.ROCK));
         positions.put(Position.of(rank, 1), PieceMeta.of(colour + "_knight.png", PieceType.KNIGHT));
         positions.put(Position.of(rank, 2), PieceMeta.of(colour + "_bishop.png", PieceType.BISHOP));
-        positions.put(Position.of(rank, 3), PieceMeta.of(colour + "_king.png", PieceType.KING));
-        positions.put(Position.of(rank, 4), PieceMeta.of(colour + "_queen.png", PieceType.QUEEN));
+        positions.put(Position.of(rank, 3), PieceMeta.of(colour + "_queen.png", PieceType.QUEEN));
+        positions.put(Position.of(rank, 4), PieceMeta.of(colour + "_king.png", PieceType.KING));
         positions.put(Position.of(rank, 5), PieceMeta.of(colour + "_bishop.png", PieceType.BISHOP));
         positions.put(Position.of(rank, 6), PieceMeta.of(colour + "_knight.png", PieceType.KNIGHT));
         positions.put(Position.of(rank, 7), PieceMeta.of(colour + "_rock.png", PieceType.ROCK));
@@ -77,8 +78,8 @@ public class Chessboard {
                 cell.setPrefSize(dh, dh);
                 cell.setBackground(col);
                 cell.setFill(col);
-                cell.setEnable(false);
-                Piece piece = getPiece(i, j, dh, dh, cell);
+                cell.setEnable(true);
+                Piece piece = getPiece(i, j, dh, dh);
                 if (piece != null) {
                     cell.add(piece);
                 }
@@ -90,7 +91,7 @@ public class Chessboard {
         return new ChessboardPane(squares);
     }
 
-    private static Piece getPiece(int i, int j, double w, double h, ChessSquare square) {
+    private static Piece getPiece(int i, int j, double w, double h) {
         PieceMeta meta = positions.get(Position.of(i, j));
         if (meta == null) {
             return null;
@@ -101,16 +102,13 @@ public class Chessboard {
         rect.setHeight(h);
         rect.setFill(new ImagePattern(image));
         return Piece.builder()
-                .rank(i)
-                .file(j)
                 .figure(rect)
-                .square(square)
                 .type(meta.getType())
                 .white(i == 0 || i == 1)
                 .build();
     }
 
     private static Background colour(int i, int j) {
-        return (i + j) % 2 == 0 ? whiteSquare : blackSquare;
+        return (i + j) % 2 == 0 ? blackSquare : whiteSquare;
     }
 }

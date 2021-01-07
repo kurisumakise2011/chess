@@ -18,6 +18,10 @@ public class KeyboardHandler implements EventHandler<KeyEvent> {
     public void handle(KeyEvent e) {
         log.log(Level.FINE, "{0} key pressed", e.getCode());
         switch (e.getCode()) {
+            case LEFT:
+                break;
+            case RIGHT:
+                break;
             case ESCAPE:
                 log.info("exiting application");
                 caller.close();

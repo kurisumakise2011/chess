@@ -1,24 +1,17 @@
 package funny.co.model;
 
-import funny.co.core.BishopMovement;
-import funny.co.core.KingMovement;
-import funny.co.core.KnightMovement;
-import funny.co.core.PawnMovement;
+import funny.co.core.Movements;
 import funny.co.core.PieceMovement;
-import funny.co.core.QueenMovement;
-import funny.co.core.RockMovement;
 
 import java.util.function.Supplier;
 
 public enum PieceType {
-    KING(KingMovement::new, "K"),
-    KNIGHT(KnightMovement::new, "Kh"),
-    PAWN(PawnMovement::new, "P"),
-    QUEEN(QueenMovement::new, "Q"),
-    BISHOP_WHITE(BishopMovement::new, "B"),
-    BISHOP_BLACK(BishopMovement::new, "B"),
-    ROCK(RockMovement::new, "R"),
-    BISHOP(BishopMovement::new, "B");
+    KING(() -> Movements.kingMovement, "K"),
+    KNIGHT(() -> Movements.knightMovement, "Kh"),
+    PAWN(() -> Movements.pawnMovement, "P"),
+    QUEEN(() -> Movements.queenMovement, "Q"),
+    ROCK(() -> Movements.rockMovement, "R"),
+    BISHOP(() -> Movements.bishopMovement, "B");
 
     private Supplier<PieceMovement> movementSupplier;
     private String name;
