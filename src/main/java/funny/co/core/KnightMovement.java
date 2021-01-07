@@ -1,19 +1,20 @@
 package funny.co.core;
 
 import funny.co.model.ChessSquare;
+import funny.co.model.Chessboard;
 import funny.co.model.Position;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class KnightMovement extends AbstractPieceMovement {
 
     @Override
-    public List<Position> find(Map<Position, ChessSquare> squares, ChessSquare square) {
+    public List<Position> find(Chessboard chessboard, ChessSquare square) {
+        var squares = chessboard.getSquares();
         List<Position> possible = new ArrayList<>(8);
 
         var pos = square.getPosition();

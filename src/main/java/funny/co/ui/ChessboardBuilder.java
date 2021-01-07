@@ -1,5 +1,6 @@
 package funny.co.ui;
 
+import funny.co.exception.ChessLogicException;
 import funny.co.model.ChessSquare;
 import funny.co.model.Piece;
 import funny.co.model.PieceMeta;
@@ -13,6 +14,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -102,10 +104,44 @@ public class ChessboardBuilder {
         rect.setHeight(h);
         rect.setFill(new ImagePattern(image));
         return Piece.builder()
+                .url(meta.getUrl())
                 .figure(rect)
                 .type(meta.getType())
                 .white(i == 0 || i == 1)
                 .build();
+    }
+
+    public static Piece createPiece(@NotNull PieceType type, boolean white) {
+        var pos = define(type, white);
+        var meta = positions.get(pos);
+        Image image = pieces.get(meta.getUrl());
+        Rectangle rect = new Rectangle();
+        // TODO fix hardcoded sizes
+        rect.setWidth(64);
+        rect.setHeight(64);
+        rect.setFill(new ImagePattern(image));
+        return Piece.builder()
+                .url(meta.getUrl())
+                .figure(rect)
+                .type(meta.getType())
+                .white(white)
+                .build();
+    }
+
+    private static Position define(PieceType type, boolean white) {
+        int rank = white ? 0 : 7;
+        switch (type) {
+            case QUEEN:
+                return Position.of(rank, 3);
+            case BISHOP:
+                return Position.of(rank, 2);
+            case KNIGHT:
+                return Position.of(rank, 1);
+            case ROCK:
+                return Position.of(rank, 0);
+            default:
+                throw new ChessLogicException("unknown pawn promotion");
+        }
     }
 
     private static Background colour(int i, int j) {

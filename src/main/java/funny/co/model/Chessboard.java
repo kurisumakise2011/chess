@@ -74,4 +74,9 @@ public class Chessboard implements CareTaker {
                 .filter(square -> square.getPiece().isWhite() == white)
                 .collect(Collectors.toList());
     }
+
+    public void enable() {
+        pane.setOpacity(1.0);
+        pane.enable();
+    }
 }

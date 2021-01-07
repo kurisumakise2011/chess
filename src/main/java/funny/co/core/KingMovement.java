@@ -1,11 +1,11 @@
 package funny.co.core;
 
 import funny.co.model.ChessSquare;
+import funny.co.model.Chessboard;
 import funny.co.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class KingMovement extends AbstractPieceMovement {
     private final List<Position> dirs = List.of(
@@ -20,7 +20,8 @@ public class KingMovement extends AbstractPieceMovement {
     );
 
     @Override
-    public List<Position> find(Map<Position, ChessSquare> squares, ChessSquare square) {
+    public List<Position> find(Chessboard chessboard, ChessSquare square) {
+        var squares = chessboard.getSquares();
         List<Position> possible = new ArrayList<>(8);
         var current = square.getPosition();
         for (Position dir : dirs) {

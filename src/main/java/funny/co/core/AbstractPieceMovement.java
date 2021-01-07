@@ -21,10 +21,10 @@ public abstract class AbstractPieceMovement implements PieceMovement {
         if (!position.validPosition()) {
             return Collections.emptyList();
         }
-        return find(chessboard.getSquares(), square);
+        return find(chessboard, square);
     }
 
-    public abstract List<Position> find(Map<Position, ChessSquare> chessboard, ChessSquare square);
+    public abstract List<Position> find(Chessboard chessboard, ChessSquare square);
 
     public Movable canMove(ChessSquare square, Chessboard chessboard, Position position) {
         var moves = allMoves(square, chessboard);

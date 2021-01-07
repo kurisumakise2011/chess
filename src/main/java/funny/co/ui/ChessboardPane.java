@@ -29,5 +29,11 @@ public class ChessboardPane extends GridPane {
     public Map<Position, ChessSquare> getSquares() {
         return squares;
     }
+
+    public void enable() {
+        squares.values().forEach(square -> {
+            square.setEnable(true);
+        });
+    }
 }
 
