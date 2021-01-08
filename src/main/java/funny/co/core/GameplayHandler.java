@@ -6,8 +6,6 @@ import funny.co.ui.ChessboardBuilder;
 import funny.co.ui.ChessboardPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,13 +38,11 @@ public class GameplayHandler {
                         movement.move(chessboard.selected, chessboard, square.getPosition());
                         var pos = square.getPosition();
                         log.log(Level.INFO, "{0} {1}{2}", new Object[]{piece.getType().getName(), pos.getRank(), pos.getFile()});
-                        square.setBackground(square.getFill());
                         chessboard.selected = null;
                         chessboard.whiteMoves = !chessboard.whiteMoves;
                         chessboard.getMoves().push(piece);
-                    } else {
-                        pane.refresh();
                     }
+                    pane.refresh();
                 }
             });
         });

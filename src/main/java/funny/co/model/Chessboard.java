@@ -1,6 +1,7 @@
 package funny.co.model;
 
 import funny.co.ui.ChessboardPane;
+import javafx.scene.control.Alert;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -71,5 +72,16 @@ public class Chessboard {
 
     public Deque<Piece> getMoves() {
         return moves;
+    }
+
+    public void checkmate(boolean whiteWin) {
+        this.refresh();
+        this.disable();
+
+        String winner = whiteWin ? "white" : "black";
+        Alert checkmateAlert = new Alert(Alert.AlertType.INFORMATION);
+        checkmateAlert.setTitle("Checkmate");
+        checkmateAlert.setContentText(String.format("Checkmate, %s wins", winner));
+        checkmateAlert.showAndWait();
     }
 }

@@ -12,9 +12,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPieceMovement implements PieceMovement {
+    private static final Logger log = Logger.getLogger(AbstractPieceMovement.class.getName());
     public List<Position> allMoves(ChessSquare square, Chessboard chessboard) {
         Position position = square.getPosition();
         if (!position.validPosition()) {
@@ -28,7 +31,6 @@ public abstract class AbstractPieceMovement implements PieceMovement {
     public boolean canMove(ChessSquare square, Chessboard chessboard, Position position) {
         var moves = allMoves(square, chessboard);
         boolean hasPosition = moves.contains(position);
-        var colour = square.getPiece().isWhite();
         boolean check = underCheck(chessboard, square, position);
 //        if (check) {
 //            // verify that other pieces cannot help to avoid the check
@@ -78,6 +80,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
                 .values()
                 .stream()
                 .filter(square -> square.getPiece() != null && square.getPiece().isWhite() != whiteMoves)
+                .filter(square -> square.getPiece().getType() != PieceType.KING)
                 .map(square -> square.getPiece().getMovement().allMoves(square, chessboard))
                 .map(position -> filterAttackOnKing(position, chessboard.getSquares(), whiteMoves))
                 .mapToLong(Collection::size)
@@ -86,6 +89,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
 
     public void move(ChessSquare square, Chessboard chessboard, Position position) {
         var piece = square.getPiece();
+        piece.hasMoved();
         // removes from previous square
 //        var squareCopy = square.save();
         square.remove();
@@ -104,8 +108,9 @@ public abstract class AbstractPieceMovement implements PieceMovement {
         var pos = enemyKing.getPosition();
         if (moves.contains(pos)) {
             // will make check
+//            log.log(Level.INFO, "");
             enemyKing.setBackground(ChessboardBuilder.check);
-            List<ChessSquare> pieces = chessboard.getPieces(colour);
+            List<ChessSquare> pieces = chessboard.getPieces(!colour);
             for (ChessSquare sq : pieces) {
                 var pieceOnSquare = sq.getPiece();
                 var poses = pieceOnSquare.getMovement().allMoves(sq, chessboard);
@@ -116,7 +121,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
                 }
             }
             // checkmate
-            chessboard.disable();
+            chessboard.checkmate(colour);
             return;
         }
         chessboard.refresh();

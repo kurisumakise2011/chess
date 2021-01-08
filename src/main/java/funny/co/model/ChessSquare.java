@@ -44,6 +44,10 @@ public class ChessSquare extends StackPane
         return current;
     }
 
+    public boolean pieceIsPresent() {
+        return current != null;
+    }
+
     public boolean isSelected() {
         return selected;
     }

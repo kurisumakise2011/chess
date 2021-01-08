@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class ChessboardPane extends GridPane {
     private final Map<Position, ChessSquare> squares;
+
     public ChessboardPane(Map<Position, ChessSquare> squares) {
         this.squares = squares;
         squares.forEach((key, value) -> this.add(value, key.getCol(), key.getRow()));
@@ -15,7 +16,9 @@ public class ChessboardPane extends GridPane {
 
     public void refresh() {
         squares.values().forEach(square -> {
-            square.setBackground(square.getFill());
+            if (square.getBackground() != ChessboardBuilder.check) {
+                square.setBackground(square.getFill());
+            }
             square.setSelected(false);
             square.setOpacity(1.0);
         });

@@ -51,7 +51,7 @@ public class PawnMovement extends AbstractPieceMovement {
         if (pos.getRow() == 0 && !white) {
             pawnPromotion(chessboard, square);
         }
-        if (piece.isFirstMove() && (pos.getRow() == 1 || pos.getRow() == 6)) {
+        if (piece.noMoves() && (pos.getRow() == 1 || pos.getRow() == 6)) {
             append(possible, pos.add(Position.of(2, 0).mult(dir)));
         }
         if (pos.getRow() == 4 && white) {
@@ -78,7 +78,7 @@ public class PawnMovement extends AbstractPieceMovement {
         var squares = chessboard.getSquares();
         Queue<Piece> moves = chessboard.getMoves();
         Piece lastMove = moves.peek();
-        if (lastMove == null || lastMove.getType() != PieceType.PAWN || !lastMove.isFirstMove()) {
+        if (lastMove == null || lastMove.getType() != PieceType.PAWN || !lastMove.wasFirstMove()) {
             return;
         }
 
@@ -140,10 +140,6 @@ public class PawnMovement extends AbstractPieceMovement {
         var squares = chessboard.getSquares();
         var piece = square.getPiece();
         Objects.requireNonNull(piece);
-        if (piece.isFirstMove()) {
-            piece.move();
-        }
-
         var to = squares.get(position);
         if (isEpassant(square, to, piece.isWhite())) {
             var underneath = to.getPosition().sub(Position.of(1, 0).mult(piece.getDirection()));

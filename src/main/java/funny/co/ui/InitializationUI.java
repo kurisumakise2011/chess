@@ -4,6 +4,7 @@ import funny.co.core.Caller;
 import funny.co.core.GameController;
 import funny.co.core.KeyboardHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -11,7 +12,11 @@ import javafx.stage.Stage;
 
 public class InitializationUI {
 
+
     public static void init(Stage stage, Caller caller) {
+        var image = new Image(InitializationUI.class.getResourceAsStream("/piece/min/black_queen.png"));
+        stage.getIcons().addAll(image);
+
         stage.setTitle("Chess");
         AnchorPane pane = new AnchorPane();
 

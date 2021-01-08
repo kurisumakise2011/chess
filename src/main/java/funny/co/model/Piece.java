@@ -41,11 +41,15 @@ public class Piece {
         return white;
     }
 
-    public boolean isFirstMove() {
-        return moves == 0 || moves == 1;
+    public boolean wasFirstMove() {
+        return moves == 1;
     }
 
-    public void move() {
+    public boolean noMoves() {
+        return moves == 0;
+    }
+
+    public void hasMoved() {
         moves++;
     }
 

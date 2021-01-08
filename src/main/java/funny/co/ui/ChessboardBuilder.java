@@ -30,14 +30,14 @@ public class ChessboardBuilder {
     public static final Background whiteSquare = new Background(new BackgroundFill(Color.WHEAT, CornerRadii.EMPTY, Insets.EMPTY));
     public static final Background blackSquare = new Background(new BackgroundFill(Color.ROSYBROWN, CornerRadii.EMPTY, Insets.EMPTY));
     public static final Background selected = new Background(new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY));
-    public static final Background check = new Background(new BackgroundFill(Color.LIGHTPINK, CornerRadii.EMPTY, Insets.EMPTY));
+    public static final Background check = new Background(new BackgroundFill(Color.INDIANRED, CornerRadii.EMPTY, Insets.EMPTY));
     public static final BackgroundFill transparent = new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY);
     public static final CornerRadii radius = new CornerRadii(40f);
     public static final Insets insets = new Insets(25, 25, 25, 25);
-    public static final BackgroundFill circle = new BackgroundFill(Color.LIGHTGREEN, radius, insets);
+    public static final BackgroundFill circle = new BackgroundFill(Color.DARKOLIVEGREEN, radius, insets);
     private static final Map<String, Image> pieces = new HashMap<>();
     private static final Map<Position, PieceMeta> positions = new HashMap<>();
-    public static BackgroundFill corners = new BackgroundFill(Color.LIGHTGREEN, CornerRadii.EMPTY, Insets.EMPTY);
+    public static BackgroundFill corners = new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY);
 
     static {
         try {
