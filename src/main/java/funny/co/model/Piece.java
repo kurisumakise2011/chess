@@ -10,6 +10,7 @@ public class Piece {
     private final boolean white;
     private final PieceMovement movement;
     private final Position direction;
+    private int moves = 0;
 
     private Piece(String url, PieceType type, Rectangle figure, boolean white, PieceMovement movement, Position direction) {
         this.url = url;
@@ -40,6 +41,14 @@ public class Piece {
         return white;
     }
 
+    public boolean isFirstMove() {
+        return moves == 0 || moves == 1;
+    }
+
+    public void move() {
+        moves++;
+    }
+
     public PieceMovement getMovement() {
         return movement;
     }
@@ -50,11 +59,8 @@ public class Piece {
 
     public static class Builder {
         private String url;
-        private int rank;
-        private int file;
         private PieceType type;
         private Rectangle figure;
-        private ChessSquare square;
         private boolean white;
 
         public Builder url(String url) {

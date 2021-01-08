@@ -17,6 +17,7 @@ public class ChessboardPane extends GridPane {
         squares.values().forEach(square -> {
             square.setBackground(square.getFill());
             square.setSelected(false);
+            square.setOpacity(1.0);
         });
     }
 

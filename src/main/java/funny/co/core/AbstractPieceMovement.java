@@ -2,7 +2,6 @@ package funny.co.core;
 
 import funny.co.model.ChessSquare;
 import funny.co.model.Chessboard;
-import funny.co.model.Movable;
 import funny.co.model.PieceType;
 import funny.co.model.Position;
 import funny.co.ui.ChessboardBuilder;
@@ -26,7 +25,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
 
     public abstract List<Position> find(Chessboard chessboard, ChessSquare square);
 
-    public Movable canMove(ChessSquare square, Chessboard chessboard, Position position) {
+    public boolean canMove(ChessSquare square, Chessboard chessboard, Position position) {
         var moves = allMoves(square, chessboard);
         boolean hasPosition = moves.contains(position);
         var colour = square.getPiece().isWhite();
@@ -46,7 +45,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
 //            return new Movable(true, false, true);
 //        }
 //        return new Movable(false, hasPosition, false);
-        return new Movable(check, hasPosition && !check, false);
+        return hasPosition && !check;
     }
 
     protected boolean underCheck(Chessboard chessboard, ChessSquare square, Position position) {
@@ -124,7 +123,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
     }
 
     protected void append(List<Position> moves, Position position) {
-        if (position.validPosition()) {
+        if (position != null && position.validPosition()) {
             moves.add(position);
         }
     }

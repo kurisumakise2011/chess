@@ -6,6 +6,7 @@ import funny.co.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class KingMovement extends AbstractPieceMovement {
     private final List<Position> dirs = List.of(
@@ -40,5 +41,15 @@ public class KingMovement extends AbstractPieceMovement {
         }
 
         return possible;
+    }
+
+    @Override
+    public void move(ChessSquare square, Chessboard chessboard, Position position) {
+        var piece = square.getPiece();
+        Objects.requireNonNull(piece);
+        if (piece.isFirstMove()) {
+            piece.move();
+        }
+        super.move(square, chessboard, position);
     }
 }

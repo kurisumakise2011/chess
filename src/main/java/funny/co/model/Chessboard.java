@@ -1,6 +1,5 @@
 package funny.co.model;
 
-import funny.co.design.CareTaker;
 import funny.co.ui.ChessboardPane;
 
 import java.util.Deque;
@@ -9,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Chessboard implements CareTaker {
+public class Chessboard {
     private final Map<Position, ChessSquare> squares;
     private final List<Piece> removed = new LinkedList<>();
-    private final Deque<ChessSquareState> histories = new LinkedList<>();
+    private final Deque<Piece> moves = new LinkedList<>();
     private final ChessboardPane pane;
     public ChessSquare selected;
     public boolean whiteMoves = true;
@@ -47,16 +46,6 @@ public class Chessboard implements CareTaker {
         pane.disable();
     }
 
-    @Override
-    public void hitSave(ChessSquareState state) {
-        histories.push(state);
-    }
-
-    @Override
-    public ChessSquareState hitUndo() {
-        return histories.pop();
-    }
-
     public ChessSquare findKing(boolean white) {
         return squares.values()
                 .stream()
@@ -78,5 +67,9 @@ public class Chessboard implements CareTaker {
     public void enable() {
         pane.setOpacity(1.0);
         pane.enable();
+    }
+
+    public Deque<Piece> getMoves() {
+        return moves;
     }
 }
