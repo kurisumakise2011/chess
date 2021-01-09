@@ -11,28 +11,31 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class InitializationUI {
-
+    private static final String CHESS = "Chess";
+    private static final String PIECE_MIN_BLACK_QUEEN_PNG = "/piece/min/black_queen.png";
 
     public static void init(Stage stage, Caller caller) {
-        var image = new Image(InitializationUI.class.getResourceAsStream("/piece/min/black_queen.png"));
+        var image = new Image(InitializationUI.class.getResourceAsStream(PIECE_MIN_BLACK_QUEEN_PNG));
         stage.getIcons().addAll(image);
 
-        stage.setTitle("Chess");
+        stage.setTitle(CHESS);
         AnchorPane pane = new AnchorPane();
+        Scene scene = new Scene(pane);
 
         StackPane chessboardHolder = new StackPane();
-        GameController controller = new GameController(chessboardHolder);
-        chessboardHolder.setOnKeyReleased(new KeyboardHandler(caller));
+        GameController controller = new GameController(chessboardHolder, stage);
 
         MenuPanel panel = new MenuPanel(controller);
         VBox vBox = new VBox();
         vBox.getChildren().addAll(panel.getBar(), chessboardHolder);
         pane.getChildren().addAll(vBox);
 
-        stage.setScene(new Scene(pane));
+        scene.setOnKeyReleased(new KeyboardHandler(caller, controller));
+        stage.setScene(scene);
 
         controller.newGame();
         stage.show();
+        controller.screenCapture();
     }
 
 }

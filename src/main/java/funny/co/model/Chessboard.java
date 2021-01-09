@@ -1,15 +1,17 @@
 package funny.co.model;
 
+import funny.co.design.Prototype;
 import funny.co.ui.ChessboardPane;
 import javafx.scene.control.Alert;
 
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Chessboard {
+public class Chessboard implements Prototype< Map<Position, ChessSquareState>> {
     private final Map<Position, ChessSquare> squares;
     private final List<Piece> removed = new LinkedList<>();
     private final Deque<Piece> moves = new LinkedList<>();
@@ -83,5 +85,26 @@ public class Chessboard {
         checkmateAlert.setTitle("Checkmate");
         checkmateAlert.setContentText(String.format("Checkmate, %s wins", winner));
         checkmateAlert.showAndWait();
+    }
+
+    @Override
+    public Map<Position, ChessSquareState> copy() {
+        Map<Position, ChessSquareState> squareStateMap = new HashMap<>();
+        for (Map.Entry<Position, ChessSquare> e : squares.entrySet()) {
+            ChessSquareState clone = e.getValue().save();
+            Position key = e.getKey().copy();
+            squareStateMap.put(key, clone);
+        }
+        return squareStateMap;
+    }
+
+    public void restore(Map<Position, ChessSquareState> squares) {
+        for (Map.Entry<Position, ChessSquare> e : this.squares.entrySet()) {
+            var square = e.getValue();
+            square.remove();
+            var state = squares.get(e.getKey());
+            square.restore(state);
+        }
+        this.refresh();
     }
 }

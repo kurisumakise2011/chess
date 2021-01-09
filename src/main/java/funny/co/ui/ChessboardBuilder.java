@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessboardBuilder {
+    public static final int MIN_DIM = 64;
+    public static final int MAX_DIM = 128;
+
     // vertical
     public static final int FILES = 8;
     // horizontal
@@ -35,13 +38,17 @@ public class ChessboardBuilder {
     public static final CornerRadii radius = new CornerRadii(40f);
     public static final Insets insets = new Insets(25, 25, 25, 25);
     public static final BackgroundFill circle = new BackgroundFill(Color.DARKOLIVEGREEN, radius, insets);
-    private static final Map<String, Image> pieces = new HashMap<>();
+    public static final Map<String, Image> pieces = new HashMap<>();
     private static final Map<Position, PieceMeta> positions = new HashMap<>();
     public static BackgroundFill corners = new BackgroundFill(Color.DARKOLIVEGREEN, CornerRadii.EMPTY, Insets.EMPTY);
 
     static {
+        loadImages("/piece/min");
+    }
+
+    public static void loadImages(String path) {
         try {
-            URL resource = ChessboardBuilder.class.getResource("/piece/min");
+            URL resource = ChessboardBuilder.class.getResource(path);
             File dir = new File(resource.toURI());
             for (File file : dir.listFiles()) {
                 pieces.put(file.getName(), new Image(file.toURI().toString()));
@@ -74,19 +81,16 @@ public class ChessboardBuilder {
     }
 
     private static ChessboardPane draw(double width, double height) {
-        final double dw = width / FILES;
-//        final double dh = height / RANKS;
-        final double dh = 64;
         Map<Position, ChessSquare> squares = new HashMap<>();
         for (int i = 0; i < FILES; i++) {
             for (int j = 0; j < RANKS; j++) {
                 var col = colour(i, j);
                 ChessSquare cell = new ChessSquare();
-                cell.setPrefSize(dh, dh);
+                cell.setPrefSize(MIN_DIM, MIN_DIM);
                 cell.setBackground(col);
                 cell.setFill(col);
                 cell.setEnable(true);
-                Piece piece = getPiece(i, j, dh, dh);
+                Piece piece = getPiece(i, j, MIN_DIM, MIN_DIM);
                 if (piece != null) {
                     cell.add(piece);
                 }
@@ -113,6 +117,7 @@ public class ChessboardBuilder {
                 .figure(rect)
                 .type(meta.getType())
                 .white(i == 0 || i == 1)
+                .moves(0)
                 .build();
     }
 
@@ -130,6 +135,7 @@ public class ChessboardBuilder {
                 .figure(rect)
                 .type(meta.getType())
                 .white(white)
+                .moves(0)
                 .build();
     }
 

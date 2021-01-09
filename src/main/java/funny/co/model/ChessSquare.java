@@ -100,6 +100,7 @@ public class ChessSquare extends StackPane
         ChessSquare clone = new ChessSquare();
         clone.selected = this.selected;
         clone.current = this.current;
+//        clone.position = this.position.copy();
         clone.position = this.position;
         clone.enable = this.enable;
 

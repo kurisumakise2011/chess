@@ -1,17 +1,8 @@
 package funny.co;
 
 import funny.co.core.Caller;
-import funny.co.core.GameController;
-import funny.co.core.GameplayHandler;
-import funny.co.core.KeyboardHandler;
-import funny.co.ui.ChessboardBuilder;
-import funny.co.ui.ChessboardPane;
 import funny.co.ui.InitializationUI;
-import funny.co.ui.MenuPanel;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Arrays;

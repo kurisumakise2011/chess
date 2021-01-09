@@ -31,11 +31,10 @@ public class MenuPanel {
 
         MenuItem newGame = new MenuItem("New game");
         MenuItem loadGame = new MenuItem("Load game");
-        MenuItem close = new MenuItem("Close");
 
         // disable right now
         loadGame.disableProperty().setValue(true);
-        game.getItems().addAll(newGame, loadGame, close);
+        game.getItems().addAll(newGame, loadGame);
 
         newGame.setOnAction(event -> {
             controller.newGame();
@@ -44,6 +43,14 @@ public class MenuPanel {
         MenuItem minimize = new MenuItem("Min");
         MenuItem maximize = new MenuItem("Max");
         settings.getItems().addAll(minimize, maximize);
+
+        minimize.setOnAction(event -> {
+            controller.minimize();
+        });
+
+        maximize.setOnAction(event -> {
+            controller.maximize();
+        });
 
         MenuItem info = new MenuItem("About");
         MenuItem githubInfo = new MenuItem("Github");

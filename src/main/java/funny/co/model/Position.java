@@ -1,8 +1,10 @@
 package funny.co.model;
 
+import funny.co.design.Prototype;
+
 import java.util.Objects;
 
-public class Position {
+public class Position implements Prototype<Position> {
     public static final Position WHITE_DIRECTION = Position.of(1, 1);
     public static final Position BLACK_DIRECTION = Position.of(-1, 1);
     private static final String[] ranks = {"a", "b", "c", "d", "e", "f", "g", "h"};
@@ -62,5 +64,10 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(i, j);
+    }
+
+    @Override
+    public Position copy() {
+        return Position.of(this.i, this.j);
     }
 }

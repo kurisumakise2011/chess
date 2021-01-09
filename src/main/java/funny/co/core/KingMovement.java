@@ -102,10 +102,10 @@ public class KingMovement extends AbstractPieceMovement {
 
     @Override
     public boolean canMove(ChessSquare square, Chessboard chessboard, Position position) {
-        var moves = allMoves(square, chessboard);
-        boolean check = underCheck(chessboard, square, position);
-        square.setBackground(check ? ChessboardBuilder.check : square.getFill());
-        return moves.contains(position) && !check;
+        if (!allMoves(square, chessboard).contains(position)) {
+            return false;
+        }
+        return !underCheck(chessboard, square, position);
     }
 
     @Override

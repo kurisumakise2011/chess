@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -31,23 +30,14 @@ public abstract class AbstractPieceMovement implements PieceMovement {
     public boolean canMove(ChessSquare square, Chessboard chessboard, Position position) {
         var moves = allMoves(square, chessboard);
         boolean hasPosition = moves.contains(position);
+        if (!hasPosition) {
+            return false;
+        }
         boolean check = underCheck(chessboard, square, position);
-//        if (check) {
-//            // verify that other pieces cannot help to avoid the check
-//            List<ChessSquare> pieces = chessboard.getPieces(colour);
-//            for (ChessSquare sq : pieces) {
-//                var piece = sq.getPiece();
-//                var poses = piece.getMovement().allMoves(sq, chessboard);
-//                for (Position pos : poses) {
-//                    if (!underCheck(chessboard, sq, pos)) {
-//                        return new Movable(true, false, false);
-//                    }
-//                }
-//            }
-//            return new Movable(true, false, true);
-//        }
-//        return new Movable(false, hasPosition, false);
-        return hasPosition && !check;
+        if (square.getPiece().getType() == PieceType.KING) {
+            square.setBackground(check ? ChessboardBuilder.check : square.getFill());
+        }
+        return !check;
     }
 
     protected boolean underCheck(Chessboard chessboard, ChessSquare square, Position position) {
