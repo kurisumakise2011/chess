@@ -42,13 +42,13 @@ To attack click on an enemy piece
 
 *Check*
 
-If the king got check, player must avoid it.
+If the king got a check, the player must avoid it.
 
 ![Check](https://github.com/kurisumakise2011/chess/raw/master/readme/check.png)
 
 *Checkmate*
 
-If a player could not avoid a check, it's checkmate, the finish of game.
+If the player could not avoid a check, it's checkmate, the finish of the game.
 
 ![Checkamte](https://github.com/kurisumakise2011/chess/raw/master/readme/checkmate.png)
 
@@ -58,8 +58,8 @@ If a player could not avoid a check, it's checkmate, the finish of game.
 Castling can be performed when:
 
 * The king piece has not moved yet.
-* A Castling rock, has not moved yet as well
-* The castling path is not under attack
+* A Castling rock, has not moved yet.
+* The castling path is not under attack.
 * The king is not under check.
 
 ![Castling](https://github.com/kurisumakise2011/chess/raw/master/readme/castling_1.png)
@@ -72,8 +72,7 @@ Castling can be performed when:
 *Pawn promotion*
 
 
-The situation when a pawn achieves last rank on the desk. 
-For black pawns this is the eighth rank, for white is the first.
+The situation when a pawn achieves last rank on the desk.
 
 ![Pawn promotion. Options window](https://github.com/kurisumakise2011/chess/raw/master/readme/promotion_1.png)
 
