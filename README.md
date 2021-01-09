@@ -111,7 +111,7 @@ Embedded javafx sdk added for simplicity (after 9 java release version, javafx i
 
 ```--module-path sdk/javafx-sdk-11.0.2/lib --add-modules javafx.base,javafx.graphics,javafx.controls```
 
-#### In development
+### In development
 
 * AI Player
 * Step back/forward
