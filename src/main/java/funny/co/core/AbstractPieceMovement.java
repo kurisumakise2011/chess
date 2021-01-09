@@ -33,11 +33,7 @@ public abstract class AbstractPieceMovement implements PieceMovement {
         if (!hasPosition) {
             return false;
         }
-        boolean check = underCheck(chessboard, square, position);
-        if (square.getPiece().getType() == PieceType.KING) {
-            square.setBackground(check ? ChessboardBuilder.check : square.getFill());
-        }
-        return !check;
+        return !underCheck(chessboard, square, position);
     }
 
     protected boolean underCheck(Chessboard chessboard, ChessSquare square, Position position) {
