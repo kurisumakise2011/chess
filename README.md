@@ -3,6 +3,7 @@
 1. [About](#about)
 2. [Gameplay](#gameplay)
 3. [Build and execution](#build-and-execution)
+4. [In development](#in-development)
 
 
 ### About
@@ -109,4 +110,10 @@ Maven build is convenient form to deploy, build and run an executable jar.
 Embedded javafx sdk added for simplicity (after 9 java release version, javafx is not a part of JDK anymore). To run the compiled project, add the following VM option to command arguments line.
 
 ```--module-path sdk/javafx-sdk-11.0.2/lib --add-modules javafx.base,javafx.graphics,javafx.controls```
+
+#### In development
+
+* AI Player
+* Step back/forward
+* Board analyser
 
