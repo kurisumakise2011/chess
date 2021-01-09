@@ -62,6 +62,10 @@ Castling can be performed when:
 * The castling path is not under attack
 * The king is not under check.
 
+![Castling](https://github.com/kurisumakise2011/chess/raw/master/readme/castling_1.png)
+
+![Castling](https://github.com/kurisumakise2011/chess/raw/master/readme/castling_2.png)
+
 [More detailed](https://en.wikipedia.org/wiki/Castling)
 
 
