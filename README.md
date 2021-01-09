@@ -25,7 +25,7 @@ Pull requests or issues are welcome.
 
 Topalov vs Kasparov 1999
 
-![Chessboard overview](https://github.com/kurisumakise2011/chess/raw/master/readme/chessboard.png)
+![Chessboard overview](https://github.com/kurisumakise2011/chess/blob/master/readme/chessboard.png)
 
 *Movement*
 
@@ -33,25 +33,25 @@ To move click on any piece then click where to move.
 
 Be aware, you cannot move in case of check, only moves regarding to the game rules are possible.
 
-![Movement](https://github.com/kurisumakise2011/chess/raw/master/readme/movement.png)
+![Movement](https://github.com/kurisumakise2011/chess/blob/master/readme/movement.png)
 
 *Attack*
 
 To attack click on an enemy piece
 
-![Attack](https://github.com/kurisumakise2011/chess/raw/master/readme/struggle.png)
+![Attack](https://github.com/kurisumakise2011/chess/blob/master/readme/struggle.png)
 
 *Check*
 
 If the king got a check, the player must avoid it.
 
-![Check](https://github.com/kurisumakise2011/chess/raw/master/readme/check.png)
+![Check](https://github.com/kurisumakise2011/chess/blob/master/readme/check.png)
 
 *Checkmate*
 
 If the player could not avoid a check, it's checkmate, the finish of the game.
 
-![Checkamte](https://github.com/kurisumakise2011/chess/raw/master/readme/checkmate.png)
+![Checkamte](https://github.com/kurisumakise2011/chess/blob/master/readme/checkmate.png)
 
 
 *Castling*
@@ -63,9 +63,9 @@ Castling can be performed when:
 * The castling path is not under attack.
 * The king is not under check.
 
-![Castling](https://github.com/kurisumakise2011/chess/raw/master/readme/castling_1.png)
+![Castling](https://github.com/kurisumakise2011/chess/blob/master/readme/castling_1.png)
 
-![Castling](https://github.com/kurisumakise2011/chess/raw/master/readme/castling_2.png)
+![Castling](https://github.com/kurisumakise2011/chess/blob/master/readme/castling_2.png)
 
 [More detailed](https://en.wikipedia.org/wiki/Castling)
 
@@ -75,20 +75,20 @@ Castling can be performed when:
 
 The situation when a pawn achieves last rank on the desk.
 
-![Pawn promotion. Options window](https://github.com/kurisumakise2011/chess/raw/master/readme/promotion_1.png)
+![Pawn promotion. Options window](https://github.com/kurisumakise2011/chess/blob/master/readme/promotion_1.png)
 
 In that case, queen had been chosen.
 
-![Pawn promotion. Queen chosen](https://github.com/kurisumakise2011/chess/raw/master/readme/promotion_2.png)
+![Pawn promotion. Queen chosen](https://github.com/kurisumakise2011/chess/blob/master/readme/promotion_2.png)
 
 *En passant (in passing)*
 
 The interesting situation when piece taking enemy pawn after its first move.
 Only possible for pawns. If instead of passing the player moves other piece, passing will be lost
 
-![En Passant](https://github.com/kurisumakise2011/chess/raw/master/readme/passant_1.png)
+![En Passant](https://github.com/kurisumakise2011/chess/blob/master/readme/passant_1.png)
 
-![White's taking an enemy piece](https://github.com/kurisumakise2011/chess/raw/master/readme/passant_2.png)
+![White's taking an enemy piece](https://github.com/kurisumakise2011/chess/blob/master/readme/passant_2.png)
 
 [More detailed](https://en.wikipedia.org/wiki/En_passant)
 
@@ -116,4 +116,4 @@ Embedded javafx sdk added for simplicity (after 9 java release version, javafx i
 * AI Player
 * Step back/forward
 * Board analyser
-
+* Multiplayer via TCP
