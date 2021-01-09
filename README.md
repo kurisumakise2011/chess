@@ -12,7 +12,7 @@ Simple single-player the chess computer game is written in Java
 
 All game actions such as: movement, check, checkmate, pawn promotion, castling, en passant are implemented.
 
-This open-source project can be used for any purpose, university's task, self-development, the base for more complex projects.
+This open-source project can be used for any purpose, university task, self-development, the base for more complex projects.
 
 Pull requests or issues are welcome.
 
@@ -36,7 +36,7 @@ Be aware, you cannot move in case of check, only moves regarding to the game rul
 
 *Attack*
 
-To attack click on an enemy's piece
+To attack click on an enemy piece
 
 ![Attack](https://github.com/kurisumakise2011/chess/raw/master/readme/struggle.png)
 
@@ -79,7 +79,7 @@ In that case, queen had been chosen.
 
 *En passant (in passing)*
 
-The interesting situation when piece taking enemy's pawn after its first move.
+The interesting situation when piece taking enemy pawn after its first move.
 Only possible for pawns. If instead of passing the player moves other piece, passing will be lost
 
 ![En Passant](https://github.com/kurisumakise2011/chess/raw/master/readme/passant_1.png)
